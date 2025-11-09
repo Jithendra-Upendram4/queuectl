@@ -1,5 +1,7 @@
 # queuectl
 
+![CI](https://github.com/Jithendra-Upendram4/queuectl/actions/workflows/ci.yml/badge.svg)
+
 Lightweight job queue CLI with SQLite persistence, workers, exponential backoff, DLQ, and graceful shutdown.
 
 Quick start (Windows PowerShell)
