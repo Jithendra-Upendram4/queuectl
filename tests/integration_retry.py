@@ -8,16 +8,27 @@ Run from project root (PowerShell):
 This script uses the internal claim-and-run function to avoid multiprocessing complexities
 on Windows and demonstrates retries and DLQ behavior.
 """
+
 import os
 import time
 import json
 
-proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
-os.chdir(proj_root)
-
 from queuectl_pkg.migrations import init_db
 from queuectl_pkg.models import Job
 from queuectl_pkg.storage import add_job, get_job
+
+
+def _ensure_cwd():
+    # When running as a script, set cwd to project root so relative DB path works.
+    proj_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    try:
+        os.chdir(proj_root)
+    except Exception:
+        # best-effort; CI/test runners usually already run from project root
+        pass
+
+
+_ensure_cwd()
 
 init_db()
 

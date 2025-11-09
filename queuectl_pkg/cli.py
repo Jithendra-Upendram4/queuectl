@@ -1,5 +1,7 @@
 import click
 import json
+import os
+import signal
 from .storage import add_job, list_jobs, get_job, update_job_state
 from .models import Job
 from .migrations import init_db
@@ -61,7 +63,6 @@ def worker_stop():
     # send SIGINT to each PID (best-effort). Since we launched processes in same python run, this may be local.
     for pid in pids:
         try:
-            import os, signal
             os.kill(int(pid), signal.SIGINT)
             click.echo(f"Sent SIGINT to {pid}")
         except Exception as e:
