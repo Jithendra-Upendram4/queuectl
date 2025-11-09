@@ -16,6 +16,7 @@ import json
 from queuectl_pkg.migrations import init_db
 from queuectl_pkg.models import Job
 from queuectl_pkg.storage import add_job, get_job
+from queuectl_pkg.worker import _claim_and_run_one_job
 
 
 def _ensure_cwd():
@@ -40,8 +41,6 @@ try:
 except Exception:
     # may already exist from a prior run
     pass
-
-from queuectl_pkg.worker import _claim_and_run_one_job
 
 print("Starting in-process worker loop to process job and exercise retries...")
 start = time.time()
